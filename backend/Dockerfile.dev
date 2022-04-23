@@ -1,0 +1,21 @@
+FROM python:3.10.2-alpine
+
+WORKDIR /usr/src/app
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+ENV DJ_DEBUG 1
+ENV DJ_SECRET_KEY django-insecure-#!0uj7$3tdbbh6e7ubci@o4%(6*svp#@(flv@t%=p%@)2^t0#!
+
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev libffi-dev
+
+RUN pip install --upgrade pip
+RUN pip install poetry
+COPY pyproject.toml .
+RUN poetry config virtualenvs.create false
+RUN poetry install
+
+COPY . .
+
+CMD python manage.py runserver 0.0.0.0:8000
