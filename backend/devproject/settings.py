@@ -82,8 +82,12 @@ ASGI_APPLICATION = "devproject.asgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": os.getenv("DATABASETYPE", "django.db.backends.sqlite3"),
+        "NAME": os.getenv("PGDATABASE", BASE_DIR / "db.sqlite3"),
+        "USER": os.getenv("PGUSER", ""),
+        "PASSWORD": os.getenv("PGPASSWORD", ""),
+        "HOST": os.getenv("PGHOST", ""),
+        "PORT": os.getenv("PGPORT", ""),
     }
 }
 
@@ -130,3 +134,23 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STATIC_ROOT = "/static/"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [
+                (
+                    os.getenv(
+                        "REDIS_HOST",
+                        "redis-cluster-ip-service",
+                    ),
+                    os.getenv(
+                        "REDIS_PORT",
+                        "6379",
+                    ),
+                )
+            ],
+        },
+    },
+}

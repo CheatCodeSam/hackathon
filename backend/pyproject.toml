@@ -10,6 +10,7 @@ Django = "^4.0.4"
 channels = "^3.0.4"
 channels-redis = "^3.4.0"
 djangorestframework = "^3.13.1"
+psycopg2 = "^2.9.3"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"

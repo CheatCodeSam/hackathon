@@ -22,6 +22,8 @@ spec:
               value: redis-cluster-ip-service
             - name: REDIS_PORT
               value: "6379"
+            - name: DATABASETYPE
+              value: django.db.backends.postgresql
             - name: PGUSER
               value: postgres
             - name: PGHOST
