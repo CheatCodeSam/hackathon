@@ -5,7 +5,7 @@ description = ""
 authors = ["Carson Weeks <mail@carsonweeks.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
 Django = "^4.0.4"
 channels = "^3.0.4"
 channels-redis = "^3.4.0"
