@@ -1,9 +1,10 @@
 import React from "react"
+import TeacherOrStudent from "./TeacherOrStudent"
 
 const App = () => {
     return (
         <div>
-            <button className="btn m-2">Hello daisyUI</button>
+            <TeacherOrStudent />
         </div>
     )
 }
