@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: server-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       component: server
@@ -34,3 +34,5 @@ spec:
               value: postgres
             - name: PGPASSWORD
               value: postgres
+            - name: PGPASfSWORD
+              value: podstgres

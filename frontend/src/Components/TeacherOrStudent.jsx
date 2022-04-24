@@ -1,8 +1,9 @@
-import React, { useState, useCallback, useEffect } from "react"
+import React, { useCallback } from "react"
 import useWebSocket, { ReadyState } from "react-use-websocket"
+import { Routes, Route, useParams } from "react-router-dom"
 
 const TeacherOrStudent = () => {
-    const [socketUrl, setSocketUrl] = useState(
+    const { sendMessage, lastMessage, readyState } = useWebSocket(
         "ws://" +
             window.location.host +
             "/ws/chat/" +
@@ -13,22 +14,13 @@ const TeacherOrStudent = () => {
             "teacher" +
             "/"
     )
-    const [messageHistory, setMessageHistory] = useState([])
 
-    const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl)
+    let { room, name, id } = useParams()
 
-    useEffect(() => {
-        if (lastMessage !== null) {
-            setMessageHistory((prev) => prev.concat(lastMessage))
-        }
-    }, [lastMessage, setMessageHistory])
-
-    const handleClickChangeSocketUrl = useCallback(
-        () => setSocketUrl("wss://demos.kaazing.com/echo"),
+    const handleClickSendMessage = useCallback(
+        () => sendMessage('{"message": "world"}'),
         []
     )
-
-    const handleClickSendMessage = useCallback(() => sendMessage("Hello"), [])
 
     const connectionStatus = {
         [ReadyState.CONNECTING]: "Connecting",
@@ -40,22 +32,7 @@ const TeacherOrStudent = () => {
 
     return (
         <div>
-            <button onClick={handleClickChangeSocketUrl}>
-                Click Me to change Socket Url
-            </button>
-            <button
-                onClick={handleClickSendMessage}
-                disabled={readyState !== ReadyState.OPEN}
-            >
-                Click Me to send 'Hello'
-            </button>
             <span>The WebSocket is currently {connectionStatus}</span>
-            {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
-            <ul>
-                {messageHistory.map((message, idx) => (
-                    <span key={idx}>{message ? message.data : null}</span>
-                ))}
-            </ul>
         </div>
     )
 }

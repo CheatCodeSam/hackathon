@@ -1,11 +1,12 @@
 import React from "react"
-import TeacherOrStudent from "./TeacherOrStudent"
+import { Routes, Route } from "react-router-dom"
+import Game from "./Game"
 
 const App = () => {
     return (
-        <div>
-            <TeacherOrStudent />
-        </div>
+        <Routes>
+            <Route path="/room/:room/name/:name/id/:id" element={<Game />} />
+        </Routes>
     )
 }
 

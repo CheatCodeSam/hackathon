@@ -20,5 +20,4 @@ RUN chmod +x bin/*.sh
 
 RUN python manage.py collectstatic --noinput
 
-
-ENTRYPOINT [ "bin/docker-entrypoint.sh" ]
+CMD daphne -b 0.0.0.0 -p 8000 devproject.asgi:application
